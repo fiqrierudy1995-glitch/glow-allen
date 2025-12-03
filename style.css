@@ -1,0 +1,1672 @@
+@font-face {
+  font-family: "Amsterdamone";
+  src: url("../fonts/Amsterdamone.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+body {
+  font-family: "Roboto Mono";
+  color: #2d2b25;
+  margin: 0;
+  padding: 0;
+  font-weight: 200;
+  font-size: 14px;
+
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /* center horizontally */
+  align-items: flex-start;
+  /* stick content to top */
+  min-height: 100vh;
+  background: #f8f8f8;
+  overflow-x: hidden;
+}
+
+/* CURTAINS */
+.curtain {
+  position: fixed;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.98) 0%,
+    /* almost white with blue tint */ rgba(255, 255, 255, 0.99) 100%
+      /* very light blue */
+  );
+  transform-style: preserve-3d;
+  transition: all 4s ease-in-out;
+  z-index: 2000;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.15);
+  /* soft depth inside */
+}
+
+/* Left curtain */
+.left-curtain {
+  left: 0;
+  transform-origin: left;
+  transform: rotateY(0deg);
+  z-index: 10;
+  border-right: 3px solid rgb(255, 255, 255);
+  /* subtle bluish edge */
+  box-shadow: 5px 0 20px rgba(0, 0, 0, 0.25);
+  /* outside shadow */
+}
+
+/* Right curtain */
+.right-curtain {
+  right: 0;
+  transform-origin: right;
+  z-index: 9;
+  border-left: 3px solid rgba(255, 255, 255, 0.911);
+  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Open animation */
+.open .left-curtain {
+  transform: rotateY(-100deg);
+}
+
+.open .right-curtain {
+  transform: rotateY(100deg);
+}
+
+/* ===========================
+   🌸 Logo
+=========================== */
+.logo {
+  width: 200px;
+  height: 200px;
+  background: url("images/logo.png") no-repeat center / contain;
+  position: absolute;
+  top: 50%;
+  right: -100px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  animation: pulseZoom 2s ease-in-out infinite;
+  z-index: 11;
+}
+
+@keyframes pulseZoom {
+  0%,
+  100% {
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.05);
+  }
+}
+
+/* Wrapper handles horizontal drift */
+.snowflake-wrapper {
+  position: absolute;
+  top: -10px;
+  animation-name: drift;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  z-index: 1;
+  /* 👈 Lower than curtain */
+  pointer-events: none;
+  /* snow won’t block clicks */
+}
+
+/* Snowflake itself falls + twinkles */
+.snowflake {
+  background-color: floralwhite;
+  border-radius: 50%;
+  opacity: 0.9;
+  animation-name: fall, twinkle;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+  z-index: 1;
+  /* 👈 Keep low */
+}
+
+/* Falling down */
+@keyframes fall {
+  to {
+    transform: translateY(900px);
+  }
+}
+
+/* Gentle side-to-side drift */
+@keyframes drift {
+  0% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(30px);
+  }
+
+  100% {
+    transform: translateX(-30px);
+  }
+}
+
+/* Twinkling */
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.9;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* prevent horizontal scroll */
+.mobile-frame,
+.scroll-container,
+.content,
+.page2 {
+  overflow-x: hidden;
+}
+
+/* MOBILE FRAME */
+.mobile-frame {
+  width: 100%;
+  max-width: 430px;
+  height: 844px;
+  margin: 0 auto;
+  position: relative;
+  border-radius: 0px;
+  box-shadow: 0px 0px black;
+  overflow: hidden;
+  background-size: contain;
+  /* make sure image fits */
+  background-repeat: repeat;
+  background-position: top center;
+}
+
+/* SCROLLABLE CONTAINER */
+.scroll-container {
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+  height: 100%;
+  overflow-y: hidden;
+  /* 🔒 lock scroll initially */
+  display: block;
+  flex-direction: column;
+  padding-bottom: 300px;
+  /* ⬅️ adds breathing space at the end */
+    background-color: #ffffff;
+
+
+  /* Firefox */
+  scrollbar-width: none;
+  /* fully hide scrollbar in Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge legacy */
+}
+
+/* Chrome, Safari, Edge */
+.scroll-container::-webkit-scrollbar {
+  width: 0;
+  /* hide scrollbar */
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/* PAGE 1 CONTENT */
+.content {
+  flex: 0 0 844px;
+  /* maintain full frame height */
+  display: flex;
+  justify-content: center;
+  /* horizontal center */
+  align-items: center;
+  /* align image to top */
+  position: relative;
+  z-index: 1;
+}
+
+/* IMAGE INSIDE CONTENT */
+.content img {
+  width: 100%;
+  max-width: 430px;
+  height: 100%;
+  max-height: 720px;
+  display: block;
+  margin: 0 auto;
+  /* centers block horizontally */
+}
+
+/* ===========================
+   🌸 PAGE 2
+=========================== */
+.page2 {
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 0;
+  box-sizing: border-box;
+}
+
+/* ✨ Verse Section */
+.verse-section {
+  padding: 25px 0 10px;
+}
+
+.verse-text {
+  font-weight: 200;
+  font-style: italic;
+  margin-bottom: 4px;
+}
+
+/* 👨‍👩‍👧 Parents Section */
+.parents-section {
+  margin: 20px 0;
+  line-height: 1.6;
+}
+
+.parent1-text,
+.parent3-text {
+  margin: 4px 0;
+  font-weight: 400;
+  font-family: "Quattrocento";
+    color: #584910;
+
+}
+
+.parent2-text {
+  margin: 6px 0;
+  letter-spacing: 0.5px;
+  text-transform: lowercase;
+  font-style: italic;
+}
+
+/* 💌 Invitation Section */
+.invitation-section {
+  margin: 0 auto;
+  max-width: 380px;
+}
+
+.aluan-text {
+  line-height: 1.5;
+  font-weight: 300;
+  margin: 0 0 0;
+}
+
+/* 💕 Couple Section */
+.couple-section {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.couple-text {
+  font-family: "Amsterdamone", cursive;
+  font-size: 40px;
+  font-weight: 450;
+  letter-spacing: 2px;
+  line-height: 0.8;
+  color: #584910;
+}
+
+.groom-text,
+.and-text,
+.bride-text {
+  display: block;
+}
+
+/* ===== Section Wrappers ===== */
+.section {
+  text-align: center;
+  margin: 20px 0 0;
+}
+
+/* 🏛️ Venue Section */
+.venue-section {
+  text-align: center;
+  margin: 0px 0 0px;
+  padding: 0px 0px;
+}
+
+.venue-label{
+  font-weight: 600;
+  margin: 0px 0px 10px;
+  font-family: "Quattrocento";
+  font-size: 14px;
+}
+
+.venue-section .tempat-text {
+  font-weight: 400;
+  color: #2d2b25;
+  margin-bottom: 15px;
+}
+
+/* Each venue block */
+.venue-item {
+
+  margin: 0px auto; /* Default margin */
+  padding: 3px 10px 10px ; /* Default padding */
+  width: 400px;
+  box-sizing: border-box; /* ✅ Ensures padding behaves consistently */
+}
+
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(6px);
+
+/* Allow per-item overrides */
+.venue-item.custom-spacing {
+  margin: var(--venue-margin, 10px 20px 20px);
+  padding: var(--venue-padding, 10px 20px);
+}
+
+/* Venue name */
+.venue-name {
+  font-weight: 400;
+  color: #2d2b25;
+  margin: 0 0 4px;
+  font-family: "Roboto Mono";
+}
+
+/* Short address */
+.venue-desc {
+  font-weight: 300;
+  font-style: italic;
+  color: #2d2b25;
+  margin: 0 0 6px;
+  font-family: "Roboto Mono";
+}
+
+/* Tag (Ceremony / Reception) */
+.venue-tag {
+  font-weight: 400;
+  color: #4f4f4f;
+  margin: 0;
+}
+
+/* 📅 Date Section */
+.date-section {
+  text-align: center;
+  margin: 0px 0;
+  padding: 0px 0;
+}
+
+.date-section .date-text {
+  font-weight: 600;
+  margin: 13px 0px 10px;
+    font-family: "Quattrocento";
+
+}
+
+.date-section .date1-text {
+  font-weight: 300;
+  color: #333;
+  margin: 0;
+}
+
+.time-section{
+  margin: 23px 0 0;
+}
+/* ⏰ Time Section */
+.time-section .hour-text {
+  font-weight: 600;
+  margin: 0px 0px 10px;
+    font-family: "Quattrocento";
+
+}
+
+.time-section .hour1-text {
+  font-weight: 300;
+  margin: 0 0 40px;
+}
+
+
+/* ===========================
+   🌸 PAGE 3 - PROGRAMME
+=========================== */
+.page3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0px 20px;
+  background-image: url("images/bg.png");
+  background-size: cover;
+  background-position: center;
+}
+
+/* 📜 Programme Section */
+.programme-section {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 📦 Programme Box */
+.box-text {
+  position: relative;
+  border-radius: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.6);
+  width: 300px;
+  max-height: 400px;
+  padding: 25px 20px;
+  margin: 0 auto;
+  backdrop-filter: blur(4px);
+  overflow-y: auto;
+
+  /* hide scrollbar */
+  scrollbar-width: none; /* Firefox */
+}
+.box-text::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.box-text h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 20px;
+      font-family: "Quattrocento";
+
+}
+
+.box-text h4 {
+  margin: 10px 0 4px;
+  font-weight: 500;
+      font-family: "Quattrocento";
+
+}
+
+.box-text p {
+  margin: 0 0 15px;
+  line-height: 1.4;
+}
+
+#atur h4,
+#atur p {
+  transition: all 0.2s ease-in-out;
+}
+#atur h4:hover,
+#atur p:hover {
+  color: #2d2b25;
+  transform: scale(1.02);
+}
+
+/* ===========================
+   🌸 DOA SECTION
+=========================== */
+.doa-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 0; /* reduced padding */
+  width: 100%;
+  height: auto;
+  margin: 0; /* ensure no extra space */
+  box-sizing: border-box;
+}
+/* Verse text */
+.doa-verse {
+  margin: 10px 25px 6px ;       /* small spacing under verse */
+  font-style: italic;
+    text-align-last: center;
+
+}
+
+/* Name / reference */
+.doa-name {
+  margin: 0;
+  font-weight:600;
+  opacity: 0.8;
+    text-align-last: center;
+
+}
+
+
+
+/* ===========================
+   🌸 Couple Photo Section
+=========================== */
+.couple-photo-section {
+  padding: 30px 0;
+  text-align: center;
+  margin: 0;
+  background-color: #efe2e2;
+  display: flex;
+  justify-content: center;
+}
+
+/* Frame / Box Wrapper */
+.photo-frame {
+  background: rgba(255, 255, 255, 0.6); /* slightly transparent white */
+  width: 90%;
+  max-width: 500px;
+  padding: 20px 10px;
+  border-radius: 16px;
+  border: 1px solid #e1d4d4;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  box-sizing: border-box;
+}
+
+/* Scroll hint */
+.scroll-hint {
+  font-size: 11px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-style: italic;
+}
+
+/* Carousel wrapper */
+.photo-carousel-wrapper {
+  position: relative;
+}
+
+/* Gradient overlay for scroll hint on edges */
+.photo-carousel-wrapper::before,
+.photo-carousel-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 40px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Carousel container */
+.photo-carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  
+  -webkit-overflow-scrolling: touch;
+  gap: 20px; /* Space between photos */
+  padding: 0 20px; /* Padding for first/last photo */
+  scroll-padding-left: calc(50% - 215px);  /* Centers the first image */
+  scroll-padding-right: calc(50% - 215px); /* Centers last image */
+}
+
+/* Hide scrollbar */
+.photo-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+/* Each photo item */
+.photo-item {
+  flex: 0 0 auto; /* Prevent stretching */
+  scroll-snap-align: center;
+  text-align: center;
+}
+
+.photo-item img {
+  width: 90vw;      /* always fits the screen */
+  max-width: 450px;     /* limit size but don't force square */
+  height: 100%;
+  max-height: 450px;         /* keep original height = no cropping */
+  object-fit: contain;    /* or contain, depending on style */
+  border-radius: 12px;
+  display: block;
+  margin: 0 auto;
+}
+
+
+/* Photo caption */
+.photo-caption {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #584910;
+  font-family: "Amsterdamone", sans-serif;
+  font-weight: 400;
+  text-align: center;
+}
+
+
+/* ===========================
+   🌸 COUNTDOWN SECTION
+=========================== */
+.menghitung-hari {
+  height: 200px;
+  display: block;
+}
+
+h2#countdowntitle {
+  font-family: "Quattrocento";
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  margin: 50px 0 30px;
+}
+
+.countdown {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.time-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.time-label {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-family: "Quattrocento";
+  text-align: center;
+  color: #333;
+}
+
+.time-box {
+  width: 70px;
+  height: 70px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(200, 200, 200, 0.5);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  font-family: "Roboto Mono";
+}
+
+.time-box p {
+  font-size: 25px;
+  font-weight: 600;
+  margin: 0;
+}
+
+
+.time-box h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 6px 0 6px; /* remove left/right margin */
+  padding: 0; /* remove any padding */
+  text-align: center; /* center text */
+}
+
+/* Smooth Pulse effect */
+@keyframes pulseBox {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    transform: scale(1.02); /* gentle scale change */
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15); /* soft shadow */
+  }
+}
+
+.kehadiran-container h2 {
+  text-align: center;
+  font-size: 16px;
+  font-family: "League Spartan";
+  font-weight: 400;
+  color: #2d2b25;
+  margin-bottom: px;
+}
+
+.kehadiran {
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+  /* jarak antara kotak */
+  margin-top: 20px;
+  flex-wrap: wrap;
+  /* turun ke bawah kalau skrin sempit */
+}
+
+.kehadiran-box {
+  border-radius: 12px;
+  padding: 2px;
+  width: 100px;
+  text-align: center;
+  font-family: "League Spartan";
+}
+
+.kehadiran-box p {
+  font-size: 36px;
+  font-weight: 300;
+  margin: 0;
+  color: #2d2b25;
+}
+
+.kehadiran-box h3 {
+  font-size: 14px;
+  font-weight: 200;
+  margin-top: 6px;
+  color: #2d2b25;
+  margin-bottom: 20px;
+}
+
+:root {
+  --navbar-height: 80px;
+}
+
+/* ===========================
+   🌸 WISHES / MESSAGE SECTION
+=========================== */
+
+/* Outer container */
+.message {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* no extra gap */
+  padding: 0 12px;
+  width: 100%;
+  font-weight: 300;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Section title */
+.message h2 {
+  font-size: 16px;
+    font-family: "Quattrocento";
+
+  font-weight: 600;
+  margin: 0 0 20px 0; /* small space after title */
+  text-align: center;
+}
+
+/* Scrollable wishes list */
+#ucapanList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0; /* no gap between messages */
+  padding: 0 0 10px;
+  height: auto;
+  width: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+    font-family: "Quattrocento";
+
+
+  /* Hide scrollbar */
+  scrollbar-width: none; /* Firefox */
+}
+#ucapanList::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+/* Remove all default margins/paddings inside messages */
+#ucapanList * {
+  margin: 0;
+  padding: 0;
+}
+
+/* Individual messages */
+#ucapanList .ucapan-item {
+  width: 100%;
+  background: none;
+  border: none;
+  box-shadow: none;
+  word-wrap: break-word;
+  white-space: normal;
+  margin-bottom: 15px;
+
+}
+
+/* Each wish block */
+.ucapan-item {
+  margin-bottom: 20px; /* space between different wishes */
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* optional subtle divider */
+}
+
+/* Message text */
+.ucapan-text {
+  font-style: italic;
+  line-height: 1.4;
+  color: #2d2b25;
+  margin-bottom: 6px; /* space between wish and name */
+}
+
+/* Name / signature */
+.ucapan-nama {
+  font-weight: 400;
+  color: #2d2b25;
+}
+
+/* Hover effect (optional) */
+.ucapan-item:hover {
+  transform: scale(1.02);
+  background-color: #ffdbe2;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+ /* Dress Code Section */
+.dress-code-section {
+  padding: 25px 20px;
+  margin: 30px 25px 90px;
+  max-width: 800px;
+border-radius: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.6);  text-align: center;
+    backdrop-filter: blur(4px);
+
+}
+
+.dress-code-section h2 {
+  font-family: "Quattrocento";
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.dress-code-section p {
+  font-size: 14px;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.dress-code-list {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: nowrap; /* prevent wrapping */
+}
+
+.dress-code-item {
+  flex: 1 1 0;
+  max-width: 200px;
+  padding: 15px 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  color: #333;
+}
+
+
+
+.dress-code-item h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.dress-code-item p {
+  font-size: 13px;
+  font-weight: 200;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ===========================
+   🌸 Bottom Navigation
+=========================== */
+:root {
+  --navbar-height: 80px; /* default nav height */
+}
+
+/* Bottom nav container */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 430px;
+  margin: 0 auto;
+  width: 100%;
+  height: var(--navbar-height);
+  background-color: rgba(255, 254, 248, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 0;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 -5px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  box-sizing: border-box;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.bottom-nav.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  background-color: rgba(255, 254, 248, 0.5);
+}
+
+/* Buttons wrapper */
+.navgang {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  flex-wrap: wrap;
+  gap: clamp(8px, 5%, 40px);
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+/* Individual buttons */
+.navgang a.nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-width: 50px;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+/* Icon inside button */
+.navgang a.nav-btn .material-symbols-outlined {
+  font-size: 35px !important;
+  color: #2d2b25;
+  padding-top: 4px;
+}
+
+/* Label below icon */
+.navgang a.nav-btn .label {
+  font-weight: 400;
+  color: #2d2b25;
+  margin-top: 4px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 400px) {
+  .bottom-nav {
+    height: 70px;
+    padding: 6px 0;
+  }
+  .navgang a.nav-btn .material-symbols-outlined {
+    font-size: 32px;
+  }
+}
+
+/* ===========================
+   🌸 Calendar Popup
+=========================== */
+
+/* Root variable for navbar height */
+:root {
+  --navbar-height: 80px;
+}
+
+
+
+/* ===========================
+   🌸 MONEY GIFT
+=========================== */
+
+
+.popup.popupmoney {
+  display: none; /* hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  pointer-events: none; /* prevent clicks when hidden */
+}
+
+
+.popup.popupmoney.show {
+  display: flex;
+    pointer-events: auto; /* allow clicks inside popup */
+
+}
+
+.moneypopup {
+  padding: 20px;
+  border-radius: 19px;
+  text-align: center;
+  box-shadow: 5px 5px 15px rgba(47, 68, 88, 0.3);
+  background-color: rgba(255, 255, 255, 0.8);
+
+  width: 90%;
+  max-width: 368px;
+
+  position: fixed;
+  bottom: calc(var(--navbar-height) + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  pointer-events: auto; /* allow clicks */
+}
+
+.moneypopup h3 {
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-family: "Quattrocento";
+  font-size: 16px;
+}
+
+.moneypopup p {
+  line-height: 1.4;
+  margin-bottom: 15px;
+  font-weight: 280;
+  font-family: "Roboto Mono";
+}
+
+.qr-wrapper {
+  margin: 15px 0;
+}
+
+.qr-image {
+  width: 180px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+#closeMoneyBtn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid #2d2b25;
+  background-color: rgba(255,255,255,0.8);
+  font-family: "Roboto Mono";
+  cursor: pointer;
+}
+.bank-details {
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+  line-height: 1.4;
+}
+
+
+/* ===========================
+   🌸 CONTACT POPUP
+=========================== */
+
+/* Contact Overlay - hidden by default */
+.popup.popupcon {
+  display: none;
+  position: fixed;
+  inset: 0; /* top, right, bottom, left = 0 */
+  background: transparent;
+  justify-content: center;
+  align-items: flex-end; /* bottom alignment */
+  padding-bottom: calc(var(--navbar-height) + 10px);
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+/* Contact Box */
+.contactpopup {
+  padding: 22px;
+  border-radius: 30px;
+  width: 380px;
+  height: auto; /* dynamic height */
+  max-height: 80vh; /* prevent overflowing screen */
+  box-shadow: 5px 5px 15px rgba(47, 68, 88, 0.3);
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Contact Heading */
+.contactpopup h3,
+#heading {
+  font-weight: 600;
+  font-size: 16px;
+  margin: 0;
+  padding: 15px 0 20px;
+  text-align: center;
+    font-family: "Quattrocento";
+
+}
+
+/* Contact Text - aligned left */
+.contactpopup p {
+  font-family: inherit; /* use global font */
+  line-height: 1.4;
+  font-weight: 400;
+  margin: 0; /* remove extra margins */
+  padding: 0 10px; /* optional small horizontal padding */
+  text-align: left; /* align text to left */
+    color: #2d2b25;
+
+}
+
+/* Special styling for #dua */
+#dua {
+  font-style: italic;
+  margin: 0; /* remove extra margins */
+  padding: 0 10px; /* optional small horizontal padding */
+  text-align: left; /* align text to left */
+  font-weight: 300;
+}
+
+/* Contact Items Layout */
+.contact-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Contact Icons */
+.contact-icons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-right: 10px;
+    color: #2d2b25;
+
+}
+
+.contact-icon {
+  font-size: 34px;
+  cursor: pointer;
+  transition: color 0.2s;
+    color: #2d2b25;
+
+}
+.contact-icons i {
+  font-size: 25px;
+  cursor: pointer;
+  transition: color 0.2s;
+  color: #333;
+  font-weight: 200;
+}
+.contact-icon:hover {
+  color: #000;
+}
+
+/* ===========================
+   🌸 LOCATION POPUP
+=========================== */
+
+/* Location Overlay - hidden by default */
+.popup.popuploc {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  box-sizing: border-box;
+}
+
+/* Location Box */
+.locationpopup {
+  padding: 10px 20px 20px;
+  border-radius: 19px;
+  text-align: center;
+  box-shadow: 5px 5px 15px rgba(47, 68, 88, 0.3);
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 90%;
+  max-width: 368px;
+  height: auto;
+  position: fixed;
+  bottom: calc(var(--navbar-height) + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+/* Location Heading */
+.locationpopup h3 {
+  font-weight: 600;
+  font-size: 16px;
+  margin: 10px 0 0;
+  font-family: "Quattrocento";
+}
+
+/* Location Paragraph */
+.locationpopup p {
+  font-weight: 200;
+  font-size: 14px;
+  line-height: 1.2;
+  margin: 10px 0 20px;
+}
+
+/* Button Row */
+.buttoned-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-family: "Roboto Mono";
+}
+
+.buttoned-row button {
+  flex: 1 1 auto;
+  max-width: calc(50% - 5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px 0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  height: 38px;
+  font-weight: 280;
+        border: 1px solid  #2d2b25;
+          background-color: rgba(255, 255, 255, 0.8);
+
+
+
+}
+
+/* Android / iOS Buttons */
+#androidedBtn1,#androidedBtn2, #iosedBtn1,
+#iosedBtn2{
+  border-radius: 9px;
+  border: 1px solid  #2d2b25;
+;
+    font-family: "Roboto Mono";
+}
+
+
+/* QR Link Section */
+.video-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.video-link a {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.video-link img.qr {
+  width: 120px;
+  height: 120px;
+  margin: 20px 0 0;
+  cursor: pointer;
+}
+
+.video-link p {
+  font-size: 16px;
+  font-weight: 400;
+  max-width: 160px;
+  text-align: center;
+  margin: 0 0 10px;
+}
+
+/* === RSVP Popup === */
+:root {
+  --navbar-height: 80px;
+  /* adjust if your nav height changes */
+  --popup-width: 368px;
+  /* standard width for all popups */
+  --popup-height: 180px;
+  /* standard height for all popups */
+}
+
+/* Overlay wrapper */
+.popupRSVP {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  justify-content: center;
+  align-items: flex-end;
+  z-index: 9999;
+  padding-bottom: calc(var(--navbar-height) + 10px);
+}
+
+/* Actual RSVP popup box */
+.rsvppopup {
+  padding: 10px 20px 30px;
+  border-radius: 18px;
+  width: 90%;
+  max-width: var(--popup-width, 368px);
+  /* ✅ fallback */
+  max-height: 300px;
+  /* collapsed height */
+  box-shadow: 5px 5px 15px rgba(47, 68, 88, 0.3);
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  box-sizing: border-box;
+  transition: max-height 0.4s ease;
+  /* smooth expand */
+  overflow: hidden;
+}
+
+/* Expanded state */
+.rsvppopup.expanded {
+  max-height: 2000vh;
+  /* ✅ Expand upward more */
+  overflow-y: auto;
+  /* scroll if too tall */
+}
+
+/* Title */
+.rsvppopup h3 {
+  font-size: 16px;
+  margin-top: 10px;
+  text-align: center;
+  font-family: "Quattrocento";
+  font-weight: 600;
+  position: relative;
+  padding-top: 15px;
+  /* ⬅️ shifts everything inside lower */
+}
+
+/* Wrapper for Hadir / Tidak Hadir buttons */
+.hadir-row {
+  display: flex;
+  justify-content: center;
+  /* center both buttons */
+  gap: 10px;
+  /* space between them */
+  margin-top: 30px;
+    font-family: "Roboto Mono";
+
+}
+
+/* General button styles */
+.hadir-row button {
+  flex: 1;
+  /* equal width */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  /* gap between icon and text */
+  padding: 10px 0;
+  font-size: 14px;
+  font-weight: 200;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  height: 40px;
+}
+
+/* Hadir button */
+#hadirBtn {
+  background-color: rgba(255, 255, 255, 0.8);
+  /* semi-transparent white */
+  border: 1px solid  #2d2b25;
+  color: #2d2b25;
+    font-family: "Roboto Mono";
+
+}
+
+/* Tidak Hadir button */
+#tidakhadirBtn {
+  background-color: rgba(255, 255, 255, 0.8);
+  /* semi-transparent white */
+  border: 1px solid #2d2b25;
+  color: #2d2b25;
+    font-family: "Roboto Mono";
+
+}
+
+/* Hover effects */
+.hadir-row button:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+/* Form (inside expanded popup, no need separate box shadow) */
+#rsvpForm,
+#rsvpFormtidak {
+  display: none;
+  margin-top: 15px;
+  width: 100%;
+  /* ✅ full width inside popup */
+}
+
+#rsvpForm div {
+  margin-bottom: 8px;
+}
+
+#rsvpForm label,
+#rsvpFormtidak label {
+  font-weight: 500;
+  color: #2d2b25;
+  font-family: "Roboto Mono";
+  font-size: 14px;
+  margin-bottom: 5px;
+  display: block;
+}
+
+#rsvpForm input,
+#rsvpFormtidak input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  color: #2d2b25;
+  font-family: "Roboto Mono";
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  height: 30px;
+}
+
+/* Dropdown styling to match inputs */
+#rsvpForm select,
+#rsvpFormtidak select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  color: #2d2b25;
+  font-family: "Roboto Mono";
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  height: 38px;
+  /* slightly taller for dropdown arrow */
+  background-color: #fff;
+  appearance: none;
+  /* remove default browser style */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='5'%3E%3Cpath fill='%2345556b' d='M0 0l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px 5px;
+}
+
+#rsvpForm textarea {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  color: #2d2b25;
+  font-family: "Roboto Mono";
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  height: 120px;
+}
+
+#rsvpFormtidak textarea {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  color: #2d2b25;
+  font-family: "Roboto Mono";
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  height: 100px;
+}
+
+/* === Form Buttons === */
+
+.form-buttons {
+  display: flex;
+  gap: 10px;      /* spacing between buttons */
+  justify-content: center; /* center both buttons */
+  margin-top: 10px;
+}
+
+.form-buttons button {
+  padding: 10px 18px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 400;
+  font-family: "Roboto Mono";
+}
+
+
+
+#hantarBtn,
+#hantarBtntidak {
+  background-color: #2d2b25;
+  color: #fff;
+}
+
+#hantarBtn:hover {
+  background-color: #2d2b25;
+}
+
+#batalBtn,
+#batalBtntidak {
+  background-color: #ccc;
+  color: #333;
+}
+
+#batalBtn:hover {
+  background-color: #bbb;
+}
+
+/* Style switcher container */
+#styleControl {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  /* hidden until curtain opens */
+  z-index: 100;
+}
+
+/* Dropdown */
+#styleSwitcher {
+  padding: 8px 14px;
+  font-size: 14px;
+  font-family: "League Spartan", sans-serif;
+  border: 2px solid #45556b;
+  border-radius: 8px;
+  background: #ffffffdd;
+  color: #333;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+  appearance: none;
+  /* removes default arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%2345556b' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  padding-right: 34px;
+  /* space for arrow */
+}
+
+/* Hover / focus effect */
+#styleSwitcher:hover,
+#styleSwitcher:focus {
+  border-color: #2d3b4f;
+  background-color: #f4f6f9;
+}
+
+#styleControl {
+  display: none !important;
+  /* forces it to stay hidden */
+}
+/* --- DYNAMIC COVER TEXT OVERLAY (CRITICAL FOR CUSTOMIZER) --- */
+
+/* 1. Make the content box the positioning context for absolute children */
+.content {
+  /* Ensure this rule is present and overrides any previous conflicting position */
+  position: relative;
+  z-index: 1; /* Keep content above background elements like snow */
+}
+
+/* 2. Position the text layer absolutely over the image */
+.cover-text-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  /* Centering and Text Styling */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center the elements */
+  align-items: center; /* Horizontally center the elements */
+
+  text-align: center;
+  color: rgb(0, 0, 0); /* Use a color that contrasts with your shadow.png */
+  z-index: 2; /* Layer above the cover image (z-index: 1) */
+
+  /* Allows the user to click the logo/button underneath */
+  pointer-events: none;
+}
+
+/* 3. Style and position the text over the image design */
+.cover-text-overlay .couple-names {
+  /* You may need to use a custom font here for the wedding look */
+  font-family: "Pinyon Script", cursive;
+  font-size: 2.5em;
+  font-weight: 400;
+
+  /* CRITICAL: Adjust this margin to visually align the names on your shadow.png image */
+  margin-top: -150px;
+  margin-bottom: 5px;
+}
+
+.cover-text-overlay .date-text,
+.cover-text-overlay .hour-text {
+  font-family: "Roboto Mono";
+  font-size: 1.1em;
+  font-weight: 300;
+  line-height: 1.5;
+}

@@ -1,0 +1,14 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Allen & Glow Wedding//Event Calendar//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:20251227T110000Z-AllenGlow@example.com
+DTSTAMP:20251107T000000Z
+DTSTART:20251227T030000Z
+DTEND:20251227T080000Z
+SUMMARY:Wedding Celebration of Allen & Glow
+DESCRIPTION:Ceremony at The Parish of St Michael & All Angels, Sandakan (03:00 - 05:00 UTC)\nReception at D'Rimba House (06:00 - 08:00 UTC)\nJoin us for a day filled with love, joy, and blessings.
+LOCATION:The Parish of St Michael & All Angels, Sandakan (Ceremony) & D'Rimba House (Reception)
+END:VEVENT
+END:VCALENDAR

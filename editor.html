@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Details Form</title>
+  <style>
+    body {
+      font-family: "League Spartan", sans-serif;
+      background: #f8f8f8;
+      color: #45556b;
+      margin: 0;
+      padding: 20px;
+    }
+    h2 { margin-top: 40px; }
+    label { display: block; margin: 8px 0 4px; font-weight: 500; }
+    input, textarea, select {
+      width: 100%;
+      padding: 6px 10px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      background: #45556b;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #5d6b83;
+    }
+    .section {
+      margin-bottom: 30px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+  </style>
+</head>
+<body>
+  <h1>Wedding Details Form</h1>
+
+  <!-- Back button -->
+  <div style="text-align: center; margin-top: 20px;">
+    <a href="index.html">
+      <button
+        style="
+          background-color: #aaa;
+          border: none;
+          color: white;
+          padding: 10px 20px;
+          font-size: 16px;
+          border-radius: 8px;
+          cursor: pointer;
+        "
+      >
+        Back to Invitation
+      </button>
+    </a>
+  </div>
+
+  <form id="weddingForm">
+    <!-- Couple Section -->
+    <div class="section">
+      <h2>Couple</h2>
+      <label for="groom">Groom Name</label>
+      <input type="text" id="groom" name="groom" required>
+      
+      <label for="bride">Bride Name</label>
+      <input type="text" id="bride" name="bride" required>
+    </div>
+
+    <!-- Parents Section -->
+    <div class="section">
+      <h2>Parents</h2>
+      <label for="groomParents">Groom Parents</label>
+      <input type="text" id="groomParents" name="groomParents" required>
+
+      <label for="brideParents">Bride Parents</label>
+      <input type="text" id="brideParents" name="brideParents" required>
+    </div>
+
+    <!-- Invitation Section -->
+    <div class="section">
+      <h2>Kata Aluan</h2>
+      <textarea id="kataAluan" name="kataAluan" rows="4" required></textarea>
+      
+      <h2>Verse</h2>
+      <input type="text" id="verse" name="verse" required>
+    </div>
+
+    <!-- Date & Time -->
+    <div class="section">
+      <h2>Date & Time</h2>
+      
+      <label for="fullDate">Select Date</label>
+      <input type="date" id="fullDate" name="fullDate" required>
+
+      <label for="timeStart">Start Time</label>
+      <select id="timeStart" name="timeStart" required>
+        <option value="">-- Select Start Time --</option>
+      </select>
+
+      <label for="timeEnd">End Time</label>
+      <select id="timeEnd" name="timeEnd" required>
+        <option value="">-- Select End Time --</option>
+      </select>
+    </div>
+
+    <!-- Venues -->
+    <div class="section">
+      <h2>Venues</h2>
+      <label for="ceremonyName">Ceremony Name</label>
+      <input type="text" id="ceremonyName" name="ceremonyName" required>
+      
+      <label for="ceremonyAddress">Ceremony Address</label>
+      <input type="text" id="ceremonyAddress" name="ceremonyAddress" required>
+      
+      <label for="receptionName">Reception Name</label>
+      <input type="text" id="receptionName" name="receptionName" required>
+      
+      <label for="receptionAddress">Reception Address</label>
+      <input type="text" id="receptionAddress" name="receptionAddress" required>
+    </div>
+
+    <!-- Programme -->
+    <div class="section">
+      <h2>Programme</h2>
+      <div id="programmeContainer">
+        <div class="programme-item">
+          <label>Time</label>
+          <input type="text" name="programmeTime[]" placeholder="10.00 am" required>
+          <label>Activity</label>
+          <input type="text" name="programmeActivity[]" placeholder="Arrival of guests" required>
+        </div>
+      </div>
+      <button type="button" onclick="addProgrammeItem()">+ Add Programme Item</button>
+    </div>
+
+    <!-- Prayer -->
+    <div class="section">
+      <h2>Prayer</h2>
+      <textarea id="prayer" name="prayer" rows="3" required></textarea>
+    </div>
+
+    <button type="submit">Save Wedding Details</button>
+  </form>
+
+  <script>
+    // Add programme item
+    function addProgrammeItem() {
+      const container = document.getElementById('programmeContainer');
+      const div = document.createElement('div');
+      div.classList.add('programme-item');
+      div.innerHTML = `
+        <label>Time</label>
+        <input type="text" name="programmeTime[]" placeholder="12.00 pm" required>
+        <label>Activity</label>
+        <input type="text" name="programmeActivity[]" placeholder="Photo session" required>
+      `;
+      container.appendChild(div);
+    }
+
+    // Generate time dropdown options
+    function generateTimeOptions() {
+      const startSelect = document.getElementById("timeStart");
+      const endSelect = document.getElementById("timeEnd");
+      const times = [];
+
+      for (let hour = 0; hour < 24; hour++) {
+        for (let min = 0; min < 60; min += 30) {
+          const h = hour % 12 || 12;
+          const ampm = hour < 12 ? "AM" : "PM";
+          const timeLabel = `${h}:${min.toString().padStart(2, "0")} ${ampm}`;
+          times.push(timeLabel);
+        }
+      }
+
+      times.forEach(time => {
+        const opt1 = document.createElement("option");
+        const opt2 = document.createElement("option");
+        opt1.value = time;
+        opt1.textContent = time;
+        opt2.value = time;
+        opt2.textContent = time;
+        startSelect.appendChild(opt1);
+        endSelect.appendChild(opt2);
+      });
+    }
+    generateTimeOptions();
+
+    // Handle form submission
+    document.getElementById('weddingForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const formData = new FormData(this);
+      const weddingDetails = {
+        couple: {
+          groom: formData.get('groom'),
+          bride: formData.get('bride')
+        },
+        parents: {
+          groomParents: formData.get('groomParents'),
+          brideParents: formData.get('brideParents')
+        },
+        kataAluan: formData.get('kataAluan'),
+        verse: formData.get('verse'),
+        date: {
+          fullDate: formData.get('fullDate'),
+          timeStart: formData.get('timeStart'),
+          timeEnd: formData.get('timeEnd')
+        },
+        venues: {
+          ceremony: {
+            name: formData.get('ceremonyName'),
+            address: formData.get('ceremonyAddress')
+          },
+          reception: {
+            name: formData.get('receptionName'),
+            address: formData.get('receptionAddress')
+          }
+        },
+        programme: formData.getAll('programmeTime[]').map((time, i) => ({
+          time,
+          activity: formData.getAll('programmeActivity[]')[i]
+        })),
+        prayer: formData.get('prayer')
+      };
+
+      console.log("Wedding Details:", weddingDetails);
+      alert("Wedding details saved! Check console.");
+    });
+  </script>
+</body>
+</html>
